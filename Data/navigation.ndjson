@@ -1,0 +1,15 @@
+{"_type":"navigation","_id":"nav-1","title":"Home","href":"#home","icon":"IconHome","isExternal":false,"order":1}
+{"_type":"navigation","_id":"nav-2","title":"About","href":"#about","icon":"IconUser","isExternal":false,"order":2}
+{"_type":"navigation","_id":"nav-3","title":"Experience","href":"#experience","icon":"IconBriefcase","isExternal":false,"order":3}
+{"_type":"navigation","_id":"nav-4","title":"Projects","href":"#projects","icon":"IconCode","isExternal":false,"order":4}
+{"_type":"navigation","_id":"nav-5","title":"Skills","href":"#skills","icon":"IconBulb","isExternal":false,"order":5}
+{"_type":"navigation","_id":"nav-6","title":"Services","href":"#services","icon":"IconTools","isExternal":false,"order":6}
+{"_type":"navigation","_id":"nav-7","title":"Education","href":"#education","icon":"IconSchool","isExternal":false,"order":7}
+{"_type":"navigation","_id":"nav-8","title":"Certifications","href":"#certifications","icon":"IconCertificate","isExternal":false,"order":8}
+{"_type":"navigation","_id":"nav-9","title":"Achievements","href":"#achievements","icon":"IconTrophy","isExternal":false,"order":9}
+{"_type":"navigation","_id":"nav-10","title":"Blog","href":"#blog","icon":"IconNews","isExternal":false,"order":10}
+{"_type":"navigation","_id":"nav-11","title":"Testimonials","href":"#testimonials","icon":"IconMessageCircle","isExternal":false,"order":11}
+{"_type":"navigation","_id":"nav-12","title":"Contact","href":"#contact","icon":"IconMail","isExternal":false,"order":12}
+{"_type":"navigation","_id":"nav-13","title":"GitHub","href":"https://github.com/johndoe","icon":"IconBrandGithub","isExternal":true,"order":13}
+{"_type":"navigation","_id":"nav-14","title":"Twitter","href":"https://twitter.com/johndoe","icon":"IconBrandX","isExternal":true,"order":14}
+
