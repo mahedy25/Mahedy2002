@@ -2636,7 +2636,15 @@
           "of": [
             {
               "type": "string",
+              "value": "core-web"
+            },
+            {
+              "type": "string",
               "value": "frontend"
+            },
+            {
+              "type": "string",
+              "value": "animations"
             },
             {
               "type": "string",
@@ -2644,31 +2652,23 @@
             },
             {
               "type": "string",
-              "value": "ai-ml"
-            },
-            {
-              "type": "string",
-              "value": "devops"
-            },
-            {
-              "type": "string",
               "value": "database"
             },
             {
               "type": "string",
-              "value": "mobile"
+              "value": "cms-auth"
             },
             {
               "type": "string",
-              "value": "cloud"
+              "value": "payments"
             },
             {
               "type": "string",
-              "value": "testing"
+              "value": "devops-hosting"
             },
             {
               "type": "string",
-              "value": "design"
+              "value": "version-control"
             },
             {
               "type": "string",
@@ -2676,11 +2676,15 @@
             },
             {
               "type": "string",
-              "value": "soft-skills"
+              "value": "design-ui/ux"
             },
             {
               "type": "string",
-              "value": "other"
+              "value": "web-services"
+            },
+            {
+              "type": "string",
+              "value": "soft-skills"
             }
           ]
         },
@@ -2927,6 +2931,10 @@
             {
               "type": "string",
               "value": "full-stack"
+            },
+            {
+              "type": "string",
+              "value": "animations"
             },
             {
               "type": "string",

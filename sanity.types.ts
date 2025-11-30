@@ -410,7 +410,7 @@ export type Skill = {
   _updatedAt: string;
   _rev: string;
   name?: string;
-  category?: "Core Web Technologies" | "Frontend Libraries & Frameworks" | "Backend & Database" | "CMS, Auth & Payments" | "DevOps, Hosting & Version Control" | "Development Tools" | "other";
+  category?: "core-web" | "frontend" | "animations" | "backend" | "database" | "cms-auth" | "payments" | "devops-hosting" | "version-control" | "tools" | "design-ui/ux" | "web-services" | "soft-skills";
   proficiency?: "beginner" | "intermediate" | "advanced" | "expert";
   percentage?: number;
   yearsOfExperience?: number;
@@ -446,7 +446,7 @@ export type Project = {
     _key: string;
     [internalGroqTypeReferenceTo]?: "skill";
   }>;
-  category?: "frontend" | "backend" | "full-stack" | "other";
+  category?: "frontend" | "backend" | "full-stack" | "animations" | "other";
   liveUrl?: string;
   githubUrl?: string;
   featured?: boolean;
@@ -797,7 +797,7 @@ export type CERTIFICATIONS_QUERYResult = Array<{
   description: string | null;
   skills: Array<{
     name: string | null;
-    category: "ai-ml" | "backend" | "cloud" | "database" | "design" | "devops" | "frontend" | "mobile" | "other" | "soft-skills" | "testing" | "tools" | null;
+    category: "animations" | "backend" | "cms-auth" | "core-web" | "database" | "design-ui/ux" | "devops-hosting" | "frontend" | "payments" | "soft-skills" | "tools" | "version-control" | "web-services" | null;
   }> | null;
   order: number | null;
 }>;
@@ -898,7 +898,7 @@ export type EXPERIENCE_QUERYResult = Array<{
   achievements: Array<string> | null;
   technologies: Array<{
     name: string | null;
-    category: "ai-ml" | "backend" | "cloud" | "database" | "design" | "devops" | "frontend" | "mobile" | "other" | "soft-skills" | "testing" | "tools" | null;
+    category: "animations" | "backend" | "cms-auth" | "core-web" | "database" | "design-ui/ux" | "devops-hosting" | "frontend" | "payments" | "soft-skills" | "tools" | "version-control" | "web-services" | null;
   }> | null;
   companyLogo: {
     asset?: {
@@ -1024,7 +1024,7 @@ export type PROJECTS_QUERYResult = Array<{
   title: string | null;
   slug: Slug | null;
   tagline: string | null;
-  category: "backend" | "frontend" | "full-stack" | "other" | null;
+  category: "animations" | "backend" | "frontend" | "full-stack" | "other" | null;
   liveUrl: string | null;
   githubUrl: string | null;
   coverImage: {
@@ -1042,7 +1042,7 @@ export type PROJECTS_QUERYResult = Array<{
   } | null;
   technologies: Array<{
     name: string | null;
-    category: "ai-ml" | "backend" | "cloud" | "database" | "design" | "devops" | "frontend" | "mobile" | "other" | "soft-skills" | "testing" | "tools" | null;
+    category: "animations" | "backend" | "cms-auth" | "core-web" | "database" | "design-ui/ux" | "devops-hosting" | "frontend" | "payments" | "soft-skills" | "tools" | "version-control" | "web-services" | null;
     color: string | null;
   }> | null;
 }>;
@@ -1087,7 +1087,7 @@ export type SERVICES_QUERYResult = Array<{
   features: Array<string> | null;
   technologies: Array<{
     name: string | null;
-    category: "ai-ml" | "backend" | "cloud" | "database" | "design" | "devops" | "frontend" | "mobile" | "other" | "soft-skills" | "testing" | "tools" | null;
+    category: "animations" | "backend" | "cms-auth" | "core-web" | "database" | "design-ui/ux" | "devops-hosting" | "frontend" | "payments" | "soft-skills" | "tools" | "version-control" | "web-services" | null;
   }> | null;
   deliverables: Array<string> | null;
   pricing: {
@@ -1105,7 +1105,7 @@ export type SERVICES_QUERYResult = Array<{
 // Query: *[_type == "skill"] | order(category asc, order asc){  name,  category,  proficiency,  percentage,  yearsOfExperience,  color}
 export type SKILLS_QUERYResult = Array<{
   name: string | null;
-  category: "ai-ml" | "backend" | "cloud" | "database" | "design" | "devops" | "frontend" | "mobile" | "other" | "soft-skills" | "testing" | "tools" | null;
+  category: "animations" | "backend" | "cms-auth" | "core-web" | "database" | "design-ui/ux" | "devops-hosting" | "frontend" | "payments" | "soft-skills" | "tools" | "version-control" | "web-services" | null;
   proficiency: "advanced" | "beginner" | "expert" | "intermediate" | null;
   percentage: number | null;
   yearsOfExperience: number | null;
