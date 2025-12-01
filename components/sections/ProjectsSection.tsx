@@ -53,7 +53,7 @@ export async function ProjectsSection() {
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     {/* Glass overlay that fades on hover */}
-                    <div className="absolute inset-0 bg-background/40 backdrop-blur-[2px] group-hover:opacity-0 transition-opacity duration-300" />
+                    <div className="hidden lg:block absolute inset-0 bg-background/40 backdrop-blur-[2px] group-hover:opacity-0 transition-opacity duration-300" />
                   </div>
                 )}
 

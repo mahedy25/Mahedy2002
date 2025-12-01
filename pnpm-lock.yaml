@@ -62,6 +62,9 @@ importers:
       framer-motion:
         specifier: ^12.23.24
         version: 12.23.24(@emotion/is-prop-valid@1.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      gsap:
+        specifier: ^3.13.0
+        version: 3.13.0
       lucide-react:
         specifier: ^0.553.0
         version: 0.553.0(react@19.2.0)
@@ -3758,6 +3761,9 @@ packages:
   groq@4.14.1:
     resolution: {integrity: sha512-C+X3OahTM7Qyns1kWbExY784H9OmTRGH42oeLWsSqZuXZv6VsUEZh6XF7sei/MqMV76Jmf4VQpZd5LhOpPTGTw==}
     engines: {node: '>=20.19 <22 || >=22.12'}
+
+  gsap@3.13.0:
+    resolution: {integrity: sha512-QL7MJ2WMjm1PHWsoFrAQH/J8wUeqZvMtHO58qdekHpCfhvhSL4gSiz6vJf5EeMP0LOn3ZCprL2ki/gjED8ghVw==}
 
   gunzip-maybe@1.4.2:
     resolution: {integrity: sha512-4haO1M4mLO91PW57BMsDFf75UmwoRX0GkdD+Faw+Lr+r/OZrOCS0pIBwOL1xCKQqnQzbNFGgK2V2CpBUPeFNTw==}
@@ -9858,6 +9864,8 @@ snapshots:
   groq@4.13.0: {}
 
   groq@4.14.1: {}
+
+  gsap@3.13.0: {}
 
   gunzip-maybe@1.4.2:
     dependencies:

@@ -3,10 +3,10 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import '../globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider } from '../../components/ThemeProvider'
-import { SidebarInset, SidebarProvider } from '../../components/ui/sidebar'
 import { FloatingDock } from '../../components/FloatingDock'
 import { ModeToggle } from '../../components/DarkModeToggle'
 import { SanityLive } from '../../sanity/lib/live'
+import { SidebarInset, SidebarProvider } from '../../components/ui/sidebar'
 
 
 const geistSans = Geist({
@@ -35,6 +35,8 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+        
+
           <ThemeProvider
             attribute='class'
             defaultTheme='system'
