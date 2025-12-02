@@ -7,7 +7,12 @@ import { BackgroundRippleEffect } from '../ui/background-ripple-effect'
 import { LayoutTextFlip } from '../ui/layout-text-flip'
 import { urlFor } from '../../sanity/lib/image'
 import { EncryptedText } from '../ui/encrypted-text'
-
+import { Orbitron } from 'next/font/google'
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['500', '700', '900'],
+  variable: '--font-orbitron',
+})
 const HERO_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
   firstName,
   lastName,
@@ -44,8 +49,20 @@ export async function HeroSection() {
         <div className='@container'>
           <div className='grid grid-cols-1 @3xl:grid-cols-2 gap-8 @lg:gap-12 items-center'>
             {/* Text Content */}
-            <div className='@container/hero space-y-4 @md/hero:space-y-6'>
-              <h1 className='text-4xl @md/hero:text-5xl @lg/hero:text-7xl font-bold tracking-tight flex flex-wrap gap-x-2'>
+            <div className='  @container/hero space-y-4 @md/hero:space-y-6'>
+              <h1
+                className={`${orbitron.className}
+    relative
+    flex flex-wrap items-center sm:items-start justify-center sm:justify-start gap-x-2
+    font-bold tracking-tight leading-[1.05]
+    text-center sm:text-start
+
+    text-[clamp(1.6rem,6vw,2.4rem)]
+    @md/hero:text-[clamp(2.3rem,6vw,3rem)]
+    @lg/hero:text-[clamp(3rem,5vw,4.25rem)]
+    @xl/hero:text-[clamp(3.75rem,4vw,5.5rem)]
+  `}
+              >
                 <EncryptedText
                   text={`${profile.firstName ?? ''} ${profile.lastName ?? ''}`}
                   revealDelayMs={45}
@@ -55,6 +72,7 @@ export async function HeroSection() {
                   splitAfter={profile.firstName?.length ?? 0}
                 />
               </h1>
+
               {profile.headlineStaticText &&
               profile.headlineAnimatedWords &&
               profile.headlineAnimatedWords.length > 0 ? (
@@ -62,13 +80,28 @@ export async function HeroSection() {
                   text={profile.headlineStaticText}
                   words={profile.headlineAnimatedWords}
                   duration={profile.headlineAnimationDuration || 3000}
-                  className="text-xl @md/hero:text-2xl @lg/hero:text-3xl text-muted-foreground font-medium"
+                  className='
+      text-xl
+      @md/hero:text-2xl
+      @lg/hero:text-3xl
+      text-muted-foreground
+      font-medium
+
+      flex flex-col
+      sm:flex-row
+      sm:flex-wrap
+      sm:gap-2
+
+      leading-tight
+      min-h-14 sm:min-h-0
+    '
                 />
               ) : (
                 <p className='text-xl @md/hero:text-2xl @lg/hero:text-3xl text-muted-foreground font-medium'>
                   {profile.headline}
                 </p>
               )}
+
               <p className='text-base @md/hero:text-lg text-muted-foreground leading-relaxed'>
                 {profile.shortBio}
               </p>

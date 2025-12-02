@@ -7,7 +7,14 @@ import { FloatingDock } from '../../components/FloatingDock'
 import { ModeToggle } from '../../components/DarkModeToggle'
 import { SanityLive } from '../../sanity/lib/live'
 import { SidebarInset, SidebarProvider } from '../../components/ui/sidebar'
+import { Poppins } from 'next/font/google'
 
+export const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-poppins',
+  display: 'swap',
+})
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -33,7 +40,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang='en' suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${poppins.variable} antialiased`}
         >
         
 
