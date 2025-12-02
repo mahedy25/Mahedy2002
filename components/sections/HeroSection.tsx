@@ -59,8 +59,7 @@ export async function HeroSection() {
 
     text-[clamp(1.6rem,6vw,2.4rem)]
     @md/hero:text-[clamp(2.3rem,6vw,3rem)]
-    @lg/hero:text-[clamp(3rem,5vw,4.25rem)]
-    @xl/hero:text-[clamp(3.75rem,4vw,5.5rem)]
+    
   `}
               >
                 <EncryptedText
