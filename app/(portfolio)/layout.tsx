@@ -8,6 +8,8 @@ import { ModeToggle } from '../../components/DarkModeToggle'
 import { SanityLive } from '../../sanity/lib/live'
 import { SidebarInset, SidebarProvider } from '../../components/ui/sidebar'
 import { Poppins } from 'next/font/google'
+import LayoutShell from '../../components/LayoutShell'
+import { Footer } from '../../components/sections/Footer'
 
 export const poppins = Poppins({
   subsets: ['latin'],
@@ -38,30 +40,47 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang='en' suppressHydrationWarning>
-        <body
-          className={`${poppins.variable} antialiased`}
-        >
-        
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${poppins.variable} antialiased`}>
 
           <ThemeProvider
-            attribute='class'
-            defaultTheme='system'
+            attribute="class"
+            defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
             <SidebarProvider>
-              <SidebarInset>{children}</SidebarInset>
+              <LayoutShell>
+
+                {/* Main Content */}
+                <SidebarInset className="flex flex-col min-h-screen">
+                  
+                  {/* Page */}
+                  <main className="flex-1">
+                    {children}
+                  </main>
+
+                  {/* Footer */}
+                  <Footer />
+
+                </SidebarInset>
+
+              </LayoutShell>
+
+              {/* Floating UI */}
               <FloatingDock />
-              <div className='fixed bottom-6 right-6 z-99'>
-                <div className='w-10 h-10 md:w-12 md:h-12'>
+
+              <div className="fixed bottom-6 right-6 z-50">
+                <div className="w-10 h-10 md:w-12 md:h-12">
                   <ModeToggle />
                 </div>
               </div>
+
             </SidebarProvider>
 
             <SanityLive />
           </ThemeProvider>
+
         </body>
       </html>
     </ClerkProvider>
