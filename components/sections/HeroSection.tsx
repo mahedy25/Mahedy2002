@@ -64,8 +64,8 @@ export async function HeroSection() {
               >
                 <EncryptedText
                   text={`${profile.firstName ?? ''} ${profile.lastName ?? ''}`}
-                  revealDelayMs={45}
-                  flipDelayMs={30}
+                  revealDelayMs={70}
+                  flipDelayMs={55}
                   encryptedClassName='opacity-60'
                   revealedClassName='text-foreground'
                   splitAfter={profile.firstName?.length ?? 0}

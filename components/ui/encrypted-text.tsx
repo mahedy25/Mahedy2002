@@ -22,10 +22,7 @@ function generateRandomCharacter(charset: string) {
   return charset[Math.floor(Math.random() * charset.length)]
 }
 
-function generateGibberishPreservingSpaces(
-  original: string,
-  charset: string
-): string {
+function generateGibberishPreservingSpaces(original: string, charset: string): string {
   if (!original) return ''
   return original
     .split('')
@@ -46,10 +43,9 @@ export const EncryptedText: React.FC<EncryptedTextProps> = ({
   const ref = useRef<HTMLSpanElement>(null)
 
   const [revealCount, setRevealCount] = useState(0)
+  const [hasAnimated, setHasAnimated] = useState(false)
 
-  // ✅ IMPORTANT: Start with a stable value for SSR
   const scrambleCharsRef = useRef<string[]>([])
-
   const rafRef = useRef<number | null>(null)
   const startTimeRef = useRef(0)
   const lastFlipTimeRef = useRef(0)
@@ -61,21 +57,15 @@ export const EncryptedText: React.FC<EncryptedTextProps> = ({
     }
   }
 
-  // ✅ Generate randomness ONLY on the client after mount
+  // Generate random characters client-side
   useEffect(() => {
-    scrambleCharsRef.current = generateGibberishPreservingSpaces(
-      text,
-      charset
-    ).split('')
+    scrambleCharsRef.current = generateGibberishPreservingSpaces(text, charset).split('')
   }, [text, charset])
 
   const startAnimation = useCallback(() => {
     stopAnimation()
 
-    scrambleCharsRef.current = generateGibberishPreservingSpaces(
-      text,
-      charset
-    ).split('')
+    scrambleCharsRef.current = generateGibberishPreservingSpaces(text, charset).split('')
 
     startTimeRef.current = performance.now()
     lastFlipTimeRef.current = startTimeRef.current
@@ -112,20 +102,36 @@ export const EncryptedText: React.FC<EncryptedTextProps> = ({
 
   useEffect(() => stopAnimation, [])
 
+  // ✅ Automatic animation when visible
+  useEffect(() => {
+    if (!ref.current || hasAnimated) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasAnimated(true)
+          startAnimation()
+        }
+      },
+      { threshold: 0.5 } // 50% visibility
+    )
+
+    observer.observe(ref.current)
+
+    return () => observer.disconnect()
+  }, [startAnimation, hasAnimated])
+
   if (!text) return null
 
   return (
     <motion.span
       ref={ref}
       className={cn(className, 'cursor-pointer')}
-      role='text'
-      aria-label={text}
       onMouseEnter={startAnimation}
     >
       {text.split('').map((char, index) => {
         const isRevealed = index < revealCount
 
-        // ✅ Fallback is STABLE during SSR
         const displayChar = isRevealed
           ? char
           : char === ' '
