@@ -52,7 +52,7 @@ export async function HeroSection() {
             <div className='  @container/hero space-y-4 @md/hero:space-y-6'>
               <h1
   className={`${orbitron.className}
-    relative
+    relative text-[#C41E3A]
     flex flex-wrap items-center sm:items-start justify-center sm:justify-start gap-x-2
     font-bold tracking-tight leading-[1.05]
     text-center sm:text-start
