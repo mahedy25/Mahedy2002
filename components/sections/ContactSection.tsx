@@ -4,8 +4,14 @@ import { defineQuery } from 'next-sanity'
 import { ContactForm } from './ContactForm'
 import { sanityFetch } from '../../sanity/lib/live'
 import WorldMapClient from '../ui/WorldMapClient'
-const CHATTROGRAM = { lat: 22.3475, lng: 91.8123 }
-
+const CHATTROGRAM = { lat: 22.3569, lng: 91.7832 }
+import { Orbitron } from 'next/font/google'
+import { EncryptedText } from '../ui/encrypted-text'
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['500', '700', '900'],
+  variable: '--font-orbitron',
+})
 const PROFILE_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
   email,
   phone,
@@ -54,11 +60,19 @@ export async function ContactSection() {
         ]}
       />
 
-      <div className='container mx-auto max-w-4xl'>
+      <div className='container mt-4 mx-auto max-w-4xl'>
         <div className='text-center mb-12'>
-          <h2 className='text-4xl mt-4 md:text-5xl font-bold mb-4'>
-            Get In Touch
-          </h2>
+          <h2 className={`${orbitron.className} text-4xl md:text-5xl font-bold mb-4`}>
+  <EncryptedText
+    text="Get In Touch"
+    revealDelayMs={70}
+    flipDelayMs={55}
+    encryptedClassName="opacity-60"
+    revealedClassName="text-foreground"
+    splitAfter={8} // Splits after "Featured" so first part can have effect, adjust if needed
+  />
+</h2>
+
           <p className='text-xl text-muted-foreground'>
             Wherever you are in the world, let&apos;s work together on your next
             project.

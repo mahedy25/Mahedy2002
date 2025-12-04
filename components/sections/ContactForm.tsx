@@ -2,7 +2,13 @@
 
 import { useState, useTransition } from "react";
 import { submitContactForm } from "../../app/actions/submit-contact-form";
+import { Orbitron } from 'next/font/google'
 
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['500', '700', '900'],
+  variable: '--font-orbitron',
+})
 
 export function ContactForm() {
   const [isPending, startTransition] = useTransition();
@@ -40,7 +46,7 @@ export function ContactForm() {
 
   return (
     <div className="@container/form bg-card border rounded-lg p-4 @md/form:p-6">
-      <h3 className="text-xl @md/form:text-2xl font-semibold mb-6">
+      <h3 className={`${orbitron.className} text-4xl md:text-5xl font-bold mb-4`}>
         Send a Message
       </h3>
 

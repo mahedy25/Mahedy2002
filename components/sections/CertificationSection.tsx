@@ -6,7 +6,13 @@ import Link from "next/link";
 import { sanityFetch } from "../../sanity/lib/live";
 import { urlFor } from "../../sanity/lib/image";
 import { CometCard } from "../ui/comet-card";
-
+import { Orbitron } from 'next/font/google'
+import { EncryptedText } from '../ui/encrypted-text'
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['500', '700', '900'],
+  variable: '--font-orbitron',
+})
 const CERTIFICATIONS_QUERY =
   defineQuery(`*[_type == "certification"] | order(issueDate desc){
   name,
@@ -50,9 +56,17 @@ export async function CertificationsSection() {
     >
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Certifications
-          </h2>
+          <h2 className={`${orbitron.className} text-4xl md:text-5xl font-bold mb-4`}>
+  <EncryptedText
+    text="Certifications"
+    revealDelayMs={70}
+    flipDelayMs={55}
+    encryptedClassName="opacity-60"
+    revealedClassName="text-foreground"
+    splitAfter={8} // Splits after "Featured" so first part can have effect, adjust if needed
+  />
+</h2>
+
           <p className="text-xl text-muted-foreground">
             Professional credentials and certifications
           </p>

@@ -51,26 +51,17 @@ export async function HeroSection() {
             {/* Text Content */}
             <div className='  @container/hero space-y-4 @md/hero:space-y-6'>
               <h1
-                className={`${orbitron.className}
+  className={`${orbitron.className}
     relative
     flex flex-wrap items-center sm:items-start justify-center sm:justify-start gap-x-2
     font-bold tracking-tight leading-[1.05]
     text-center sm:text-start
-
     text-[clamp(1.6rem,6vw,2.4rem)]
     @md/hero:text-[clamp(2.3rem,6vw,3rem)]
-    
   `}
-              >
-                <EncryptedText
-                  text={`${profile.firstName ?? ''} ${profile.lastName ?? ''}`}
-                  revealDelayMs={70}
-                  flipDelayMs={55}
-                  encryptedClassName='opacity-60'
-                  revealedClassName='text-foreground'
-                  splitAfter={profile.firstName?.length ?? 0}
-                />
-              </h1>
+>
+  {`${profile.firstName ?? ''} ${profile.lastName ?? ''}`}
+</h1>
 
               {profile.headlineStaticText &&
               profile.headlineAnimatedWords &&

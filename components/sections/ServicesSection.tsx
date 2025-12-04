@@ -5,7 +5,13 @@ import Image from "next/image";
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "../../sanity/lib/live";
 import { urlFor } from "../../sanity/lib/image";
-
+import { Orbitron } from 'next/font/google'
+import { EncryptedText } from '../ui/encrypted-text'
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['500', '700', '900'],
+  variable: '--font-orbitron',
+})
 const SERVICES_QUERY =
   defineQuery(`*[_type == "service"] | order(order asc, _createdAt desc){
   title,
@@ -72,7 +78,17 @@ export async function ServicesSection() {
     <section id="services" className="py-20 px-6">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Services</h2>
+          <h2 className={`${orbitron.className} text-4xl md:text-5xl font-bold mb-4`}>
+  <EncryptedText
+    text="Services"
+    revealDelayMs={70}
+    flipDelayMs={55}
+    encryptedClassName="opacity-60"
+    revealedClassName="text-foreground"
+    splitAfter={8} // Splits after "Featured" so first part can have effect, adjust if needed
+  />
+</h2>
+
           <p className="text-xl text-muted-foreground">What I can do for you</p>
         </div>
 

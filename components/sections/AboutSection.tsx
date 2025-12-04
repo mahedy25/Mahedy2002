@@ -2,7 +2,13 @@ import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
 import { defineQuery } from 'next-sanity'
 import { sanityFetch } from '../../sanity/lib/live'
-
+import { Orbitron } from 'next/font/google'
+import { EncryptedText } from '../ui/encrypted-text'
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['500', '700', '900'],
+  variable: '--font-orbitron',
+})
 
 const ABOUT_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
   firstName,
@@ -24,20 +30,32 @@ export async function AboutSection() {
 
   return (
     <section id='about' className='py-20 px-6'>
+
+
       <div className='container mx-auto max-w-4xl'>
         <div className='text-center mb-12'>
-          <h2 className='text-4xl md:text-5xl font-bold mb-4'>About Me</h2>
+          <h2 className={`${orbitron.className} text-4xl md:text-5xl font-bold mb-4`}>
+  <EncryptedText
+    text="About Me"
+    revealDelayMs={70}
+    flipDelayMs={55}
+    encryptedClassName="opacity-60"
+    revealedClassName="text-foreground"
+    splitAfter={8} // Splits after "Featured" so first part can have effect, adjust if needed
+    />
+</h2>
+
           <p className='text-xl text-muted-foreground'>Get to know me better</p>
         </div>
 
         <div className='prose prose-lg dark:prose-invert max-w-none'>
           {profile.fullBio && (
             <PortableText
-              value={profile.fullBio}
-              components={{
-                block: {
-                  normal: ({ children }) => (
-                    <p className='text-muted-foreground leading-relaxed mb-4'>
+            value={profile.fullBio}
+            components={{
+              block: {
+                normal: ({ children }) => (
+                  <p className='text-muted-foreground leading-relaxed mb-4'>
                       {children}
                     </p>
                   ),
@@ -67,10 +85,10 @@ export async function AboutSection() {
                     const isExternal = href.startsWith('http')
                     return (
                       <Link
-                        href={href}
-                        target={isExternal ? '_blank' : undefined}
-                        rel={isExternal ? 'noopener noreferrer' : undefined}
-                        className='text-primary hover:underline'
+                      href={href}
+                      target={isExternal ? '_blank' : undefined}
+                      rel={isExternal ? 'noopener noreferrer' : undefined}
+                      className='text-primary hover:underline'
                       >
                         {children}
                       </Link>
@@ -90,8 +108,8 @@ export async function AboutSection() {
                   ),
                 },
               }}
-            />
-          )}
+              />
+            )}
         </div>
 
         {/* Stats from CMS */}
@@ -100,8 +118,8 @@ export async function AboutSection() {
             <div className='grid grid-cols-2 @lg:grid-cols-4 gap-6'>
               {profile.stats.map((stat, idx) => (
                 <div
-                  key={`${stat.label}-${idx}`}
-                  className='@container/stat text-center'
+                key={`${stat.label}-${idx}`}
+                className='@container/stat text-center'
                 >
                   <div className='text-3xl @md/stat:text-4xl font-bold text-primary mb-2'>
                     {stat.value}
@@ -115,6 +133,7 @@ export async function AboutSection() {
           </div>
         )}
       </div>
+
     </section>
   ) 
 }

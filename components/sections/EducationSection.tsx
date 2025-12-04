@@ -4,7 +4,13 @@ import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "../../sanity/lib/live";
 import { urlFor } from "../../sanity/lib/image";
-
+import { Orbitron } from 'next/font/google'
+import { EncryptedText } from '../ui/encrypted-text'
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['500', '700', '900'],
+  variable: '--font-orbitron',
+})
 const EDUCATION_QUERY =
   defineQuery(`*[_type == "education"] | order(endDate desc, startDate desc){
   institution,
@@ -58,7 +64,17 @@ export async function EducationSection() {
 
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Education</h2>
+          <h2 className={`${orbitron.className} text-4xl md:text-5xl font-bold mb-4`}>
+  <EncryptedText
+    text="Education"
+    revealDelayMs={70}
+    flipDelayMs={55}
+    encryptedClassName="opacity-60"
+    revealedClassName="text-foreground"
+    splitAfter={8} // Splits after "Featured" so first part can have effect, adjust if needed
+  />
+</h2>
+
           <p className="text-xl text-muted-foreground">
             My academic background
           </p>

@@ -170,3 +170,11 @@ body {
 }
 
 
+@keyframes addReadyClass {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
+
+
