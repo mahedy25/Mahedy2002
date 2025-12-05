@@ -32,11 +32,14 @@ export async function Footer() {
 
           {/* Brand */}
           <div className="flex flex-col text-center md:text-left gap-1">
-            <h3
+            <Link href="/">
+              <h3
               className={`${orbitron.className} text-lg tracking-wide`}
             >
               {fullName}
             </h3>
+            </Link>
+            
 
             <p className="text-xs text-muted-foreground tracking-wider">
               Portfolio & Personal Website
