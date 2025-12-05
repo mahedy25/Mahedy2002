@@ -177,14 +177,14 @@ export async function ContactSection() {
                         Twitter
                       </Link>
                     )}
-                    {profile.socialLinks.website && (
+                    {profile.socialLinks.instagram && (
                       <Link
-                        href={profile.socialLinks.website}
+                        href={profile.socialLinks.instagram}
                         target='_blank'
                         rel='noopener noreferrer'
                         className='px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm'
                       >
-                        Website
+                        Instagram
                       </Link>
                     )}
                     {profile.socialLinks.medium && (
