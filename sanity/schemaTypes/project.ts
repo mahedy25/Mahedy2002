@@ -4,55 +4,55 @@ export default defineType({
   name: "project",
   title: "Projects",
   type: "document",
+
   fields: [
+    // ---------------- BASIC INFO ----------------
     defineField({
       name: "title",
       title: "Project Title",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
+
     defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
-      options: {
-        source: "title",
-        maxLength: 96,
-      },
+      options: { source: "title", maxLength: 96 },
       validation: (Rule) => Rule.required(),
     }),
+
     defineField({
       name: "tagline",
       title: "Tagline",
+      description: "1-sentence project summary",
       type: "string",
-      description: "Short one-liner about the project",
       validation: (Rule) => Rule.max(150),
     }),
+
     defineField({
       name: "coverImage",
       title: "Cover Image",
       type: "image",
-      options: {
-        hotspot: true,
-      },
+      options: { hotspot: true },
       fields: [
         {
           name: "alt",
+          title: "Alt Text",
           type: "string",
-          title: "Alternative Text",
-          description: "Describe the image for accessibility",
         },
       ],
       validation: (Rule) => Rule.required(),
     }),
+
     defineField({
       name: "technologies",
       title: "Technologies Used",
       type: "array",
       of: [{ type: "reference", to: [{ type: "skill" }] }],
-      description: "Select from your skills list (max 6 recommended)",
       validation: (Rule) => Rule.required(),
     }),
+
     defineField({
       name: "category",
       title: "Project Category",
@@ -62,40 +62,94 @@ export default defineType({
           { title: "Frontend Web Development", value: "frontend" },
           { title: "Backend Web Development", value: "backend" },
           { title: "Full Stack Web Development", value: "full-stack" },
-          { title: "Animated websites", value: "animations" },
+          { title: "Animated Websites", value: "animations" },
           { title: "Other", value: "other" },
         ],
       },
       validation: (Rule) => Rule.required(),
     }),
+
     defineField({
       name: "liveUrl",
       title: "Live URL",
       type: "url",
-      description: "Link to the live project",
     }),
+
     defineField({
       name: "githubUrl",
       title: "GitHub URL",
       type: "url",
-      description: "Link to the GitHub repository",
     }),
+
     defineField({
       name: "featured",
       title: "Featured Project",
       type: "boolean",
-      description: "Show this project prominently on the homepage",
       initialValue: false,
     }),
+
     defineField({
       name: "order",
       title: "Display Order",
       type: "number",
-      description: "Lower numbers appear first (0-99)",
       initialValue: 0,
       validation: (Rule) => Rule.min(0).max(99),
     }),
+
+    // ================== CASE STUDY SECTIONS ==================
+
+    defineField({
+      name: "overview",
+      title: "Project Overview",
+      description: "Full explanation of the project (rich text)",
+      type: "array",
+      of: [{ type: "block" }],
+    }),
+
+    defineField({
+      name: "problem",
+      title: "Client Problem",
+      description: "What challenge did the client face?",
+      type: "text",
+      rows: 4,
+    }),
+
+    defineField({
+      name: "solution",
+      title: "Your Solution",
+      description: "How you solved the problem",
+      type: "text",
+      rows: 4,
+    }),
+
+    defineField({
+      name: "features",
+      title: "Key Features",
+      type: "array",
+      of: [{ type: "string" }],
+    }),
+
+    defineField({
+      name: "results",
+      title: "Results & Impact",
+      description: "Outcome for the client or project",
+      type: "text",
+      rows: 4,
+    }),
+
+    defineField({
+      name: "gallery",
+      title: "Gallery Screenshots",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+        },
+      ],
+    }),
   ],
+
   preview: {
     select: {
       title: "title",
@@ -103,15 +157,16 @@ export default defineType({
       category: "category",
       featured: "featured",
     },
-    prepare(selection) {
-      const { title, media, category, featured } = selection;
+
+    prepare({ title, media, category, featured }) {
       return {
         title: featured ? `⭐ ${title}` : title,
         subtitle: category || "Uncategorized",
-        media: media,
+        media,
       };
     },
   },
+
   orderings: [
     {
       title: "Display Order",

@@ -473,6 +473,41 @@ export type Project = {
   githubUrl?: string;
   featured?: boolean;
   order?: number;
+  overview?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  problem?: string;
+  solution?: string;
+  features?: Array<string>;
+  results?: string;
+  gallery?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }>;
 };
 
 export type Profile = {
@@ -642,7 +677,7 @@ export type AllSanitySchemaTypes = Navigation | SiteSettings | SanityImageCrop |
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./app/(portfolio)/projects/[slug]/page.tsx
 // Variable: PROJECT_QUERY
-// Query: *[_type=="project" && slug.current==$slug][0]{    title,    tagline,    category,    liveUrl,    githubUrl,    coverImage,    technologies[]->{name, color}  }
+// Query: *[_type=="project" && slug.current==$slug][0]{    title,    tagline,    category,    liveUrl,    githubUrl,    coverImage,    technologies[]->{name},    overview,    problem,    solution,    features,    results,    gallery  }
 export type PROJECT_QUERYResult = {
   title: string | null;
   tagline: string | null;
@@ -664,7 +699,41 @@ export type PROJECT_QUERYResult = {
   } | null;
   technologies: Array<{
     name: string | null;
-    color: string | null;
+  }> | null;
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  problem: string | null;
+  solution: string | null;
+  features: Array<string> | null;
+  results: string | null;
+  gallery: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
   }> | null;
 } | null;
 
@@ -1214,7 +1283,7 @@ export type TESTIMONIALS_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type==\"project\" && slug.current==$slug][0]{\n    title,\n    tagline,\n    category,\n    liveUrl,\n    githubUrl,\n    coverImage,\n    technologies[]->{name, color}\n  }\n": PROJECT_QUERYResult;
+    "\n  *[_type==\"project\" && slug.current==$slug][0]{\n    title,\n    tagline,\n    category,\n    liveUrl,\n    githubUrl,\n    coverImage,\n    technologies[]->{name},\n\n    overview,\n    problem,\n    solution,\n    features,\n    results,\n    gallery\n  }\n": PROJECT_QUERYResult;
     "*[_type == \"navigation\"] | order(order asc){\n  title,\n  href,\n  icon,\n  isExternal\n}": NAVIGATION_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n  firstName,\n  lastName,\n  fullBio,\n  yearsOfExperience,\n  stats,\n  email,\n  phone,\n  location\n}": ABOUT_QUERYResult;
     "*[_type == \"achievement\"] | order(date desc){\n  title,\n  type,\n  issuer,\n  date,\n  description,\n  image,\n  url,\n  featured,\n  order\n}": ACHIEVEMENTS_QUERYResult;

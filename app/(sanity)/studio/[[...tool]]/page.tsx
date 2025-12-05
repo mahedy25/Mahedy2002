@@ -24,5 +24,7 @@ export function generateStaticParams() {
 }
 
 export default function StudioPage() {
-  return <NextStudio config={sanityConfig} />;
+  return (
+    <NextStudio config={sanityConfig} />
+  )
 }

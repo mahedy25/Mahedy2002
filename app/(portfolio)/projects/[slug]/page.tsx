@@ -1,10 +1,10 @@
-// app/(portfolio)/projects/[slug]/page.tsx
 import Image from "next/image";
 import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import { Orbitron } from "next/font/google";
 import { sanityFetch } from "../../../../sanity/lib/live";
 import { urlFor } from "../../../../sanity/lib/image";
+import { PortableText } from "@portabletext/react";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -13,17 +13,23 @@ const orbitron = Orbitron({
 
 interface Technology {
   name: string | null;
-  color?: string | null;
 }
 
 interface Project {
   title: string | null;
   tagline?: string | null;
-  category?: "frontend" | "backend" | "full-stack" | "animations" | "other" | null;
+  category?: string | null;
   coverImage?: any | null;
   technologies?: Technology[] | null;
   liveUrl?: string | null;
   githubUrl?: string | null;
+
+  overview?: any[];
+  problem?: string | null;
+  solution?: string | null;
+  features?: string[] | null;
+  results?: string | null;
+  gallery?: any[] | null;
 }
 
 const PROJECT_QUERY = defineQuery(`
@@ -34,24 +40,28 @@ const PROJECT_QUERY = defineQuery(`
     liveUrl,
     githubUrl,
     coverImage,
-    technologies[]->{name, color}
+    technologies[]->{name},
+
+    overview,
+    problem,
+    solution,
+    features,
+    results,
+    gallery
   }
 `);
 
 type PageProps = {
-  params: Promise<{ slug: string }>; // Must await because of group routes
+  params: Promise<{ slug: string }>;
 };
 
 export default async function ProjectPage({ params }: PageProps) {
   const { slug } = await params;
 
-  if (!slug) return <div>Project not found</div>;
-
-  // Fetch project from Sanity
-  const result = (await sanityFetch({
+  const result = await sanityFetch({
     query: PROJECT_QUERY,
     params: { slug },
-  })) as { data: Project | null };
+  }) as { data: Project | null };
 
   const project = result.data;
 
@@ -59,29 +69,33 @@ export default async function ProjectPage({ params }: PageProps) {
 
   return (
     <section className="py-20 px-6">
-      <div className="max-w-6xl mx-auto space-y-12">
+      <div className="max-w-6xl mx-auto space-y-16">
 
-        {/* HERO SECTION */}
+        {/* HERO */}
         <div className="space-y-4 text-center">
           {project.category && (
-            <span className="text-primary text-sm uppercase tracking-[0.3em]">
+            <span className="text-primary uppercase tracking-[0.3em] text-sm">
               {project.category}
             </span>
           )}
-          <h1 className={`${orbitron.className} text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black`}>
-            {project.title ?? "Untitled Project"}
+
+          <h1 className={`${orbitron.className} text-4xl md:text-5xl font-black`}>
+            {project.title}
           </h1>
+
           {project.tagline && (
-            <p className="text-muted-foreground max-w-2xl mx-auto">{project.tagline}</p>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              {project.tagline}
+            </p>
           )}
         </div>
 
-        {/* COVER IMAGE */}
+        {/* COVER */}
         {project.coverImage && (
-          <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl">
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-xl">
             <Image
               src={urlFor(project.coverImage).width(1200).url()}
-              alt={project.title ?? "Project image"}
+              alt={project.title ?? "Project screenshot"}
               fill
               className="object-cover"
               priority
@@ -90,39 +104,133 @@ export default async function ProjectPage({ params }: PageProps) {
         )}
 
         {/* TECH STACK */}
-        {project.technologies?.length ? (
+        {project.technologies?.length && (
           <div>
-            <h3 className={`${orbitron.className} text-xl mb-3`}>Built With</h3>
+            <h3 className={`${orbitron.className} text-xl mb-3`}>
+              Built With
+            </h3>
             <div className="flex flex-wrap gap-2">
               {project.technologies.map((tech, i) => (
-                <span
-                  key={i}
-                  className="px-3 py-1 rounded-md text-xs border bg-muted"
-                >
-                  {tech.name ?? "Unknown"}
+                <span key={i} className="px-3 py-1 border rounded-md text-xs bg-muted">
+                  {tech.name}
                 </span>
               ))}
             </div>
           </div>
-        ) : null}
+        )}
 
-        {/* ACTION BUTTONS */}
+        {/* OVERVIEW */}
+        {project.overview && (
+          <div>
+            <h3 className={`${orbitron.className} text-xl mb-3`}>
+              Project Overview
+            </h3>
+
+            <div className="prose dark:prose-invert max-w-none">
+              <PortableText value={project.overview} />
+            </div>
+          </div>
+        )}
+
+        {/* PROBLEM + SOLUTION */}
+        <div className="grid gap-8 md:grid-cols-2">
+          {project.problem && (
+            <div>
+              <h3 className={`${orbitron.className} text-xl mb-2`}>
+                The Challenge
+              </h3>
+              <p className="text-muted-foreground">
+                {project.problem}
+              </p>
+            </div>
+          )}
+
+          {project.solution && (
+            <div>
+              <h3 className={`${orbitron.className} text-xl mb-2`}>
+                The Solution
+              </h3>
+              <p className="text-muted-foreground">
+                {project.solution}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* FEATURES */}
+        {project.features?.length && (
+          <div>
+            <h3 className={`${orbitron.className} text-xl mb-3`}>
+              Key Features
+            </h3>
+
+            <ul className="grid gap-3 md:grid-cols-2">
+              {project.features.map((item, i) => (
+                <li
+                  key={i}
+                  className="p-3 border rounded-lg bg-muted"
+                >
+                  ✅ {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* RESULTS */}
+        {project.results && (
+          <div>
+            <h3 className={`${orbitron.className} text-xl mb-3`}>
+              Results
+            </h3>
+
+            <p className="text-muted-foreground">
+              {project.results}
+            </p>
+          </div>
+        )}
+
+        {/* GALLERY */}
+        {project.gallery?.length && (
+          <div>
+            <h3 className={`${orbitron.className} text-xl mb-4`}>
+              Project Gallery
+            </h3>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {project.gallery.map((img, i) => (
+                <div
+                  key={i}
+                  className="relative aspect-video rounded-lg overflow-hidden border"
+                >
+                  <Image
+                    src={urlFor(img).width(800).url()}
+                    alt={`Gallery ${i + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* CTA */}
         <div className="flex flex-wrap justify-center gap-4 pt-6">
           {project.liveUrl && (
             <Link
               href={project.liveUrl}
               target="_blank"
-              rel="noopener noreferrer"
               className={`${orbitron.className} px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition`}
             >
               Visit Website
             </Link>
           )}
+
           {project.githubUrl && (
             <Link
               href={project.githubUrl}
               target="_blank"
-              rel="noopener noreferrer"
               className="px-6 py-3 rounded-lg border hover:bg-accent transition"
             >
               GitHub Repo
@@ -130,7 +238,7 @@ export default async function ProjectPage({ params }: PageProps) {
           )}
         </div>
 
-        {/* BACK NAV */}
+        {/* BACK */}
         <div className="pt-20 text-center">
           <Link
             href="/#projects"
