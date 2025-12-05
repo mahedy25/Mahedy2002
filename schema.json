@@ -3370,6 +3370,13 @@
               },
               "optional": true
             },
+            "instagram": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
             "linkedin": {
               "type": "objectAttribute",
               "value": {
@@ -3377,14 +3384,14 @@
               },
               "optional": true
             },
-            "twitter": {
+            "facebook": {
               "type": "objectAttribute",
               "value": {
                 "type": "string"
               },
               "optional": true
             },
-            "website": {
+            "twitter": {
               "type": "objectAttribute",
               "value": {
                 "type": "string"

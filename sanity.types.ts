@@ -503,9 +503,10 @@ export type Profile = {
   availability?: "available" | "open" | "unavailable";
   socialLinks?: {
     github?: string;
+    instagram?: string;
     linkedin?: string;
+    facebook?: string;
     twitter?: string;
-    website?: string;
     medium?: string;
     devto?: string;
     youtube?: string;
@@ -826,9 +827,10 @@ export type PROFILE_QUERYResult = {
   location: string | null;
   socialLinks: {
     github?: string;
+    instagram?: string;
     linkedin?: string;
+    facebook?: string;
     twitter?: string;
-    website?: string;
     medium?: string;
     devto?: string;
     youtube?: string;
@@ -916,6 +918,36 @@ export type EXPERIENCE_QUERYResult = Array<{
   companyWebsite: string | null;
 }>;
 
+// Source: ./components/sections/Footer.tsx
+// Variable: FOOTER_QUERY
+// Query: *[_id == "singleton-profile"][0]{  firstName,  lastName,  email,  socialLinks}
+export type FOOTER_QUERYResult = {
+  firstName: null;
+  lastName: null;
+  email: null;
+  socialLinks: null;
+} | {
+  firstName: null;
+  lastName: null;
+  email: string | null;
+  socialLinks: null;
+} | {
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  socialLinks: {
+    github?: string;
+    instagram?: string;
+    linkedin?: string;
+    facebook?: string;
+    twitter?: string;
+    medium?: string;
+    devto?: string;
+    youtube?: string;
+    stackoverflow?: string;
+  } | null;
+} | null;
+
 // Source: ./components/sections/HeroSection.tsx
 // Variable: HERO_QUERY
 // Query: *[_id == "singleton-profile"][0]{  firstName,  lastName,  headline,  headlineStaticText,  headlineAnimatedWords,  headlineAnimationDuration,  shortBio,  email,  phone,  location,  availability,  socialLinks,  yearsOfExperience,  profileImage}
@@ -993,9 +1025,10 @@ export type HERO_QUERYResult = {
   availability: "available" | "open" | "unavailable" | null;
   socialLinks: {
     github?: string;
+    instagram?: string;
     linkedin?: string;
+    facebook?: string;
     twitter?: string;
-    website?: string;
     medium?: string;
     devto?: string;
     youtube?: string;
@@ -1162,6 +1195,7 @@ declare module "@sanity/client" {
     "*[_id == \"singleton-profile\"][0]{\n  email,\n  phone,\n  location,\n  socialLinks\n}": PROFILE_QUERYResult;
     "*[_type == \"education\"] | order(endDate desc, startDate desc){\n  institution,\n  degree,\n  fieldOfStudy,\n  startDate,\n  endDate,\n  current,\n  gpa,\n  description,\n  achievements,\n  logo,\n  website,\n  order\n}": EDUCATION_QUERYResult;
     "*[_type == \"experience\"] | order(startDate desc){\n  company,\n  position,\n  employmentType,\n  location,\n  startDate,\n  endDate,\n  current,\n  description,\n  responsibilities,\n  achievements,\n  technologies[]->{name, category},\n  companyLogo,\n  companyWebsite\n}": EXPERIENCE_QUERYResult;
+    "*[_id == \"singleton-profile\"][0]{\n  firstName,\n  lastName,\n  email,\n  socialLinks\n}": FOOTER_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n  firstName,\n  lastName,\n  headline,\n  headlineStaticText,\n  headlineAnimatedWords,\n  headlineAnimationDuration,\n  shortBio,\n  email,\n  phone,\n  location,\n  availability,\n  socialLinks,\n  yearsOfExperience,\n  profileImage\n}": HERO_QUERYResult;
     "*[_type == \"project\" && featured == true] | order(order asc)[0...6]{\n  title,\n  slug,\n  tagline,\n  category,\n  liveUrl,\n  githubUrl,\n  coverImage,\n  technologies[]->{name, category, color}\n}": PROJECTS_QUERYResult;
     "*[_type == \"service\"] | order(order asc, _createdAt desc){\n  title,\n  slug,\n  icon,\n  shortDescription,\n  fullDescription,\n  features,\n  technologies[]->{name, category},\n  deliverables,\n  pricing,\n  timeline,\n  featured,\n  order\n}": SERVICES_QUERYResult;
