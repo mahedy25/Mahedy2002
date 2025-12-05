@@ -81,7 +81,7 @@ export default async function ProjectPage({ params }: PageProps) {
             </span>
           )}
 
-          <h1 className={`${orbitron.className} text-4xl md:text-5xl font-black`}>
+          <h1 className={`${orbitron.className} text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black`}>
             {project.title}
           </h1>
 

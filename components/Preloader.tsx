@@ -11,13 +11,13 @@ const orbitron = Orbitron({
 
 // Fun rotating developer messages
 const funTexts = [
-  "Compiling Awesomeness...",
-  "Polishing Pixels...",
-  "Optimizing Your Experience...",
-  "Aligning Divs (we hope)...",
-  "Loading Creative Mode...",
-  "Deploying Style & Vibes...",
-]
+  "Brewing fresh code…",
+  "Finalizing the pixels…",
+  "Fine-tuning interactions…",
+  "Optimizing performance…",
+  "Loading creativity…",
+  "Assembling modern web magic…",
+];
 
 export default function Preloader({ onFinish }: { onFinish: () => void }) {
   const [funText, setFunText] = useState(funTexts[0])

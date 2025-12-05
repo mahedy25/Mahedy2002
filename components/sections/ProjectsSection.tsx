@@ -54,6 +54,8 @@ export async function ProjectsSection() {
   return (
     <section id="projects" className="cursor-pointer py-20 px-6 bg-muted/30">
       <div className="container mx-auto max-w-6xl">
+
+        {/* SECTION HEADER */}
         <div className="text-center mb-16">
           <h2 className={`${orbitron.className} text-4xl md:text-5xl font-bold mb-4`}>
             <EncryptedText
@@ -68,19 +70,31 @@ export async function ProjectsSection() {
           <p className="text-xl text-muted-foreground">Some of my best work</p>
         </div>
 
+        {/* PROJECT GRID */}
         <div className="@container">
           <div className="grid grid-cols-1 @2xl:grid-cols-2 @5xl:grid-cols-3 gap-8">
+
             {projects.map((project) => {
               if (!project.slug?.current) return null;
 
               return (
-                <Link
+                <div
                   key={project.slug.current}
-                  href={`/projects/${project.slug.current}`}
-                  className="@container/card group bg-card border rounded-lg overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(196,30,58,0.6)] hover:border-[#C41E3A]"
+                  className="@container/card group relative bg-card border rounded-lg overflow-hidden
+                             transition-all duration-300
+                             hover:shadow-[0_0_30px_rgba(196,30,58,0.6)]
+                             hover:border-[#C41E3A]"
                 >
-                  {/* MEDIA: Video if exists, else Image */}
-                  <div className="relative aspect-video overflow-hidden bg-muted rounded-t-lg">
+
+                  {/* CARD LINK OVERLAY (case study navigation) */}
+                  <Link
+                    href={`/projects/${project.slug.current}`}
+                    className="absolute inset-0 z-1"
+                    aria-label={`Open case study for ${project.title}`}
+                  />
+
+                  {/* MEDIA */}
+                  <div className="relative z-2 aspect-video overflow-hidden bg-muted rounded-t-lg">
                     {project.demoVideo?.asset?.url ? (
                       <video
                         src={project.demoVideo.asset.url}
@@ -96,14 +110,15 @@ export async function ProjectsSection() {
                           src={urlFor(project.coverImage).width(600).height(400).url()}
                           alt={project.title ?? "Project image"}
                           fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-300 rounded-t-lg"
+                          className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-t-lg"
                         />
                       )
                     )}
                   </div>
 
                   {/* CONTENT */}
-                  <div className="p-4 @md/card:p-6 space-y-3 @md/card:space-y-4">
+                  <div className="relative z-2 p-4 @md/card:p-6 space-y-3 @md/card:space-y-4">
+
                     <div>
                       {project.category && (
                         <span className="text-xs px-2 py-0.5 @md/card:py-1 rounded-full bg-primary/10 text-primary">
@@ -123,9 +138,9 @@ export async function ProjectsSection() {
                     {/* TECH STACK */}
                     {project.technologies && (
                       <div className="flex flex-wrap gap-1.5 @md/card:gap-2">
-                        {project.technologies.slice(0, 4).map((tech, idx) => (
+                        {project.technologies.slice(0, 4).map((tech, i) => (
                           <span
-                            key={`${project.slug!.current}-tech-${idx}`}
+                            key={`${project.slug!.current}-tech-${i}`}
                             className="text-xs px-2 py-0.5 @md/card:py-1 rounded-md bg-muted"
                           >
                             {tech.name}
@@ -139,12 +154,55 @@ export async function ProjectsSection() {
                         )}
                       </div>
                     )}
+
+                    {/* CTA BUTTONS */}
+                    {(project.liveUrl || project.githubUrl) && (
+                      <div className="flex gap-3 pt-3">
+
+                        {project.liveUrl && (
+                          <Link
+                            href={project.liveUrl}
+                            target="_blank"
+                            className={`${orbitron.className}
+                              z-3 text-xs px-3 py-1.5 rounded-md border bg-card
+                              transition-all
+                              hover:border-[#C41E3A]
+                              hover:text-[#C41E3A]
+                              hover:shadow-[0_0_18px_rgba(196,30,58,0.6)]
+                            `}
+                          >
+                            Live ↗
+                          </Link>
+                        )}
+
+                        {project.githubUrl && (
+                          <Link
+                            href={project.githubUrl}
+                            target="_blank"
+                            className={`${orbitron.className}
+                              z-3 text-xs px-3 py-1.5 rounded-md border bg-card
+                              transition-all
+                              hover:border-[#C41E3A]
+                              hover:text-[#C41E3A]
+                              hover:shadow-[0_0_18px_rgba(196,30,58,0.6)]
+                            `}
+                          >
+                            GitHub ↗
+                          </Link>
+                        )}
+
+                      </div>
+                    )}
+
                   </div>
-                </Link>
+
+                </div>
               );
             })}
+
           </div>
         </div>
+
       </div>
     </section>
   );
