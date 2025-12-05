@@ -6,7 +6,6 @@ export default defineType({
   type: "document",
 
   fields: [
-    // ---------------- BASIC INFO ----------------
     defineField({
       name: "title",
       title: "Project Title",
@@ -25,24 +24,27 @@ export default defineType({
     defineField({
       name: "tagline",
       title: "Tagline",
-      description: "1-sentence project summary",
       type: "string",
       validation: (Rule) => Rule.max(150),
     }),
 
+    // ---------------- COVER IMAGE ----------------
     defineField({
       name: "coverImage",
       title: "Cover Image",
       type: "image",
       options: { hotspot: true },
-      fields: [
-        {
-          name: "alt",
-          title: "Alt Text",
-          type: "string",
-        },
-      ],
-      validation: (Rule) => Rule.required(),
+      fields: [{ name: "alt", title: "Alt Text", type: "string" }],
+    }),
+
+    // ---------------- DEMO VIDEO ----------------
+    defineField({
+      name: "demoVideo",
+      title: "Demo Video (Optional, MP4)",
+      type: "file",
+      options: {
+        accept: "video/mp4",
+      },
     }),
 
     defineField({
@@ -50,7 +52,6 @@ export default defineType({
       title: "Technologies Used",
       type: "array",
       of: [{ type: "reference", to: [{ type: "skill" }] }],
-      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
@@ -66,20 +67,10 @@ export default defineType({
           { title: "Other", value: "other" },
         ],
       },
-      validation: (Rule) => Rule.required(),
     }),
 
-    defineField({
-      name: "liveUrl",
-      title: "Live URL",
-      type: "url",
-    }),
-
-    defineField({
-      name: "githubUrl",
-      title: "GitHub URL",
-      type: "url",
-    }),
+    defineField({ name: "liveUrl", title: "Live URL", type: "url" }),
+    defineField({ name: "githubUrl", title: "GitHub URL", type: "url" }),
 
     defineField({
       name: "featured",
@@ -93,61 +84,15 @@ export default defineType({
       title: "Display Order",
       type: "number",
       initialValue: 0,
-      validation: (Rule) => Rule.min(0).max(99),
     }),
 
-    // ================== CASE STUDY SECTIONS ==================
-
-    defineField({
-      name: "overview",
-      title: "Project Overview",
-      description: "Full explanation of the project (rich text)",
-      type: "array",
-      of: [{ type: "block" }],
-    }),
-
-    defineField({
-      name: "problem",
-      title: "Client Problem",
-      description: "What challenge did the client face?",
-      type: "text",
-      rows: 4,
-    }),
-
-    defineField({
-      name: "solution",
-      title: "Your Solution",
-      description: "How you solved the problem",
-      type: "text",
-      rows: 4,
-    }),
-
-    defineField({
-      name: "features",
-      title: "Key Features",
-      type: "array",
-      of: [{ type: "string" }],
-    }),
-
-    defineField({
-      name: "results",
-      title: "Results & Impact",
-      description: "Outcome for the client or project",
-      type: "text",
-      rows: 4,
-    }),
-
-    defineField({
-      name: "gallery",
-      title: "Gallery Screenshots",
-      type: "array",
-      of: [
-        {
-          type: "image",
-          options: { hotspot: true },
-        },
-      ],
-    }),
+    // -------- CASE STUDY CONTENT --------
+    defineField({ name: "overview", title: "Project Overview", type: "array", of: [{ type: "block" }] }),
+    defineField({ name: "problem", title: "Client Problem", type: "text" }),
+    defineField({ name: "solution", title: "Your Solution", type: "text" }),
+    defineField({ name: "features", title: "Key Features", type: "array", of: [{ type: "string" }] }),
+    defineField({ name: "results", title: "Results & Impact", type: "text" }),
+    defineField({ name: "gallery", title: "Gallery Screenshots", type: "array", of: [{ type: "image", options: { hotspot: true } }] })
   ],
 
   preview: {
@@ -157,7 +102,6 @@ export default defineType({
       category: "category",
       featured: "featured",
     },
-
     prepare({ title, media, category, featured }) {
       return {
         title: featured ? `⭐ ${title}` : title,
@@ -168,11 +112,7 @@ export default defineType({
   },
 
   orderings: [
-    {
-      title: "Display Order",
-      name: "orderAsc",
-      by: [{ field: "order", direction: "asc" }],
-    },
+    { title: "Display Order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] },
     {
       title: "Featured First",
       name: "featuredFirst",

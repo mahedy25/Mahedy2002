@@ -21,8 +21,9 @@ interface Project {
   title: string | null;
   slug?: { current: string } | null;
   tagline?: string | null;
-  category?: "frontend" | "backend" | "full-stack" | "animations" | "other" | null;
+  category?: string | null;
   coverImage?: any | null;
+  demoVideo?: { asset?: { url?: string } } | null;
   technologies?: Technology[] | null;
   liveUrl?: string | null;
   githubUrl?: string | null;
@@ -39,6 +40,7 @@ const PROJECTS_QUERY = defineQuery(`
     liveUrl,
     githubUrl,
     coverImage,
+    demoVideo{asset->{url}},
     technologies[]->{name, color}
   }
 `);
@@ -69,26 +71,38 @@ export async function ProjectsSection() {
         <div className="@container">
           <div className="grid grid-cols-1 @2xl:grid-cols-2 @5xl:grid-cols-3 gap-8">
             {projects.map((project) => {
-              if (!project.slug?.current) return null; // Skip if slug missing
+              if (!project.slug?.current) return null;
+
               return (
                 <Link
                   key={project.slug.current}
                   href={`/projects/${project.slug.current}`}
                   className="@container/card group bg-card border rounded-lg overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(196,30,58,0.6)] hover:border-[#C41E3A]"
                 >
-                  {/* Project Image */}
-                  {project.coverImage && (
-                    <div className="relative aspect-video overflow-hidden bg-muted rounded-t-lg">
-                      <Image
-                        src={urlFor(project.coverImage).width(600).height(400).url()}
-                        alt={project.title ?? "Project image"}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300 rounded-t-lg"
+                  {/* MEDIA: Video if exists, else Image */}
+                  <div className="relative aspect-video overflow-hidden bg-muted rounded-t-lg">
+                    {project.demoVideo?.asset?.url ? (
+                      <video
+                        src={project.demoVideo.asset.url}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-full object-cover rounded-t-lg"
                       />
-                    </div>
-                  )}
+                    ) : (
+                      project.coverImage && (
+                        <Image
+                          src={urlFor(project.coverImage).width(600).height(400).url()}
+                          alt={project.title ?? "Project image"}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300 rounded-t-lg"
+                        />
+                      )
+                    )}
+                  </div>
 
-                  {/* Project Content */}
+                  {/* CONTENT */}
                   <div className="p-4 @md/card:p-6 space-y-3 @md/card:space-y-4">
                     <div>
                       {project.category && (
@@ -96,27 +110,30 @@ export async function ProjectsSection() {
                           {project.category}
                         </span>
                       )}
+
                       <h3 className="text-lg @md/card:text-xl font-semibold mb-2 line-clamp-2">
-                        {project.title ?? "Untitled Project"}
+                        {project.title}
                       </h3>
+
                       <p className="text-muted-foreground text-xs @md/card:text-sm line-clamp-2">
                         {project.tagline ?? ""}
                       </p>
                     </div>
 
-                    {/* Tech Stack */}
-                    {project.technologies && project.technologies.length > 0 && (
+                    {/* TECH STACK */}
+                    {project.technologies && (
                       <div className="flex flex-wrap gap-1.5 @md/card:gap-2">
                         {project.technologies.slice(0, 4).map((tech, idx) => (
                           <span
                             key={`${project.slug!.current}-tech-${idx}`}
                             className="text-xs px-2 py-0.5 @md/card:py-1 rounded-md bg-muted"
                           >
-                            {tech.name ?? "Unknown"}
+                            {tech.name}
                           </span>
                         ))}
+
                         {project.technologies.length > 4 && (
-                          <span className="text-xs px-2 py-0.5 @md/card:py-1 rounded-md bg-muted">
+                          <span className="text-xs px-2 py-0.5 rounded-md bg-muted">
                             +{project.technologies.length - 4}
                           </span>
                         )}

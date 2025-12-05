@@ -461,6 +461,16 @@ export type Project = {
     alt?: string;
     _type: "image";
   };
+  demoVideo?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    _type: "file";
+  };
   technologies?: Array<{
     _ref: string;
     _type: "reference";
@@ -677,7 +687,7 @@ export type AllSanitySchemaTypes = Navigation | SiteSettings | SanityImageCrop |
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./app/(portfolio)/projects/[slug]/page.tsx
 // Variable: PROJECT_QUERY
-// Query: *[_type=="project" && slug.current==$slug][0]{    title,    tagline,    category,    liveUrl,    githubUrl,    coverImage,    technologies[]->{name},    overview,    problem,    solution,    features,    results,    gallery  }
+// Query: *[_type=="project" && slug.current==$slug][0]{    title,    tagline,    category,    liveUrl,    githubUrl,    coverImage,    demoVideo{asset->{url}},    technologies[]->{name},    overview,    problem,    solution,    features,    results,    gallery  }
 export type PROJECT_QUERYResult = {
   title: string | null;
   tagline: string | null;
@@ -696,6 +706,11 @@ export type PROJECT_QUERYResult = {
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
+  } | null;
+  demoVideo: {
+    asset: {
+      url: string | null;
+    } | null;
   } | null;
   technologies: Array<{
     name: string | null;
@@ -1149,7 +1164,7 @@ export type HERO_QUERYResult = {
 
 // Source: ./components/sections/ProjectsSection.tsx
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project" && featured == true] | order(order asc)[0...6]{    title,    slug,    tagline,    category,    liveUrl,    githubUrl,    coverImage,    technologies[]->{name, color}  }
+// Query: *[_type == "project" && featured == true] | order(order asc)[0...6]{    title,    slug,    tagline,    category,    liveUrl,    githubUrl,    coverImage,    demoVideo{asset->{url}},    technologies[]->{name, color}  }
 export type PROJECTS_QUERYResult = Array<{
   title: string | null;
   slug: Slug | null;
@@ -1169,6 +1184,11 @@ export type PROJECTS_QUERYResult = Array<{
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
+  } | null;
+  demoVideo: {
+    asset: {
+      url: string | null;
+    } | null;
   } | null;
   technologies: Array<{
     name: string | null;
@@ -1283,7 +1303,7 @@ export type TESTIMONIALS_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type==\"project\" && slug.current==$slug][0]{\n    title,\n    tagline,\n    category,\n    liveUrl,\n    githubUrl,\n    coverImage,\n    technologies[]->{name},\n\n    overview,\n    problem,\n    solution,\n    features,\n    results,\n    gallery\n  }\n": PROJECT_QUERYResult;
+    "\n  *[_type==\"project\" && slug.current==$slug][0]{\n    title,\n    tagline,\n    category,\n    liveUrl,\n    githubUrl,\n    coverImage,\n    demoVideo{asset->{url}},\n    technologies[]->{name},\n\n    overview,\n    problem,\n    solution,\n    features,\n    results,\n    gallery\n  }\n": PROJECT_QUERYResult;
     "*[_type == \"navigation\"] | order(order asc){\n  title,\n  href,\n  icon,\n  isExternal\n}": NAVIGATION_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n  firstName,\n  lastName,\n  fullBio,\n  yearsOfExperience,\n  stats,\n  email,\n  phone,\n  location\n}": ABOUT_QUERYResult;
     "*[_type == \"achievement\"] | order(date desc){\n  title,\n  type,\n  issuer,\n  date,\n  description,\n  image,\n  url,\n  featured,\n  order\n}": ACHIEVEMENTS_QUERYResult;
@@ -1294,7 +1314,7 @@ declare module "@sanity/client" {
     "*[_type == \"experience\"] | order(startDate desc){\n  company,\n  position,\n  employmentType,\n  location,\n  startDate,\n  endDate,\n  current,\n  description,\n  responsibilities,\n  achievements,\n  technologies[]->{name, category},\n  companyLogo,\n  companyWebsite\n}": EXPERIENCE_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n  firstName,\n  lastName,\n  email,\n  socialLinks\n}": FOOTER_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n  firstName,\n  lastName,\n  headline,\n  headlineStaticText,\n  headlineAnimatedWords,\n  headlineAnimationDuration,\n  shortBio,\n  email,\n  phone,\n  location,\n  availability,\n  socialLinks,\n  yearsOfExperience,\n  profileImage\n}": HERO_QUERYResult;
-    "\n  *[_type == \"project\" && featured == true] | order(order asc)[0...6]{\n    title,\n    slug,\n    tagline,\n    category,\n    liveUrl,\n    githubUrl,\n    coverImage,\n    technologies[]->{name, color}\n  }\n": PROJECTS_QUERYResult;
+    "\n  *[_type == \"project\" && featured == true] | order(order asc)[0...6]{\n    title,\n    slug,\n    tagline,\n    category,\n    liveUrl,\n    githubUrl,\n    coverImage,\n    demoVideo{asset->{url}},\n    technologies[]->{name, color}\n  }\n": PROJECTS_QUERYResult;
     "*[_type == \"service\"] | order(order asc, _createdAt desc){\n  title,\n  slug,\n  icon,\n  shortDescription,\n  fullDescription,\n  features,\n  technologies[]->{name, category},\n  deliverables,\n  pricing,\n  timeline,\n  featured,\n  order\n}": SERVICES_QUERYResult;
     "*[_type == \"skill\"] | order(category asc, order asc){\n  name,\n  category,\n  proficiency,\n  percentage,\n  yearsOfExperience,\n  color\n}": SKILLS_QUERYResult;
     "*[_type == \"testimonial\" && featured == true] | order(order asc){\n  name,\n  position,\n  company,\n  testimonial,\n  rating,\n  date,\n  avatar,\n  companyLogo,\n  linkedinUrl\n}": TESTIMONIALS_QUERYResult;

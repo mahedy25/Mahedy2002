@@ -20,6 +20,7 @@ interface Project {
   tagline?: string | null;
   category?: string | null;
   coverImage?: any | null;
+  demoVideo?: { asset?: { url?: string } } | null;
   technologies?: Technology[] | null;
   liveUrl?: string | null;
   githubUrl?: string | null;
@@ -40,6 +41,7 @@ const PROJECT_QUERY = defineQuery(`
     liveUrl,
     githubUrl,
     coverImage,
+    demoVideo{asset->{url}},
     technologies[]->{name},
 
     overview,
@@ -90,25 +92,34 @@ export default async function ProjectPage({ params }: PageProps) {
           )}
         </div>
 
-        {/* COVER */}
-        {project.coverImage && (
-          <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-xl">
-            <Image
-              src={urlFor(project.coverImage).width(1200).url()}
-              alt={project.title ?? "Project screenshot"}
-              fill
-              className="object-cover"
-              priority
+        {/* COVER OR VIDEO */}
+        <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-xl">
+          {project.demoVideo?.asset?.url ? (
+            <video
+              src={project.demoVideo.asset.url}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
             />
-          </div>
-        )}
+          ) : (
+            project.coverImage && (
+              <Image
+                src={urlFor(project.coverImage).width(1200).url()}
+                alt={project.title ?? "Project screenshot"}
+                fill
+                className="object-cover"
+                priority
+              />
+            )
+          )}
+        </div>
 
         {/* TECH STACK */}
         {project.technologies?.length && (
           <div>
-            <h3 className={`${orbitron.className} text-xl mb-3`}>
-              Built With
-            </h3>
+            <h3 className={`${orbitron.className} text-xl mb-3`}>Built With</h3>
             <div className="flex flex-wrap gap-2">
               {project.technologies.map((tech, i) => (
                 <span key={i} className="px-3 py-1 border rounded-md text-xs bg-muted">
@@ -122,10 +133,7 @@ export default async function ProjectPage({ params }: PageProps) {
         {/* OVERVIEW */}
         {project.overview && (
           <div>
-            <h3 className={`${orbitron.className} text-xl mb-3`}>
-              Project Overview
-            </h3>
-
+            <h3 className={`${orbitron.className} text-xl mb-3`}>Project Overview</h3>
             <div className="prose dark:prose-invert max-w-none">
               <PortableText value={project.overview} />
             </div>
@@ -136,23 +144,15 @@ export default async function ProjectPage({ params }: PageProps) {
         <div className="grid gap-8 md:grid-cols-2">
           {project.problem && (
             <div>
-              <h3 className={`${orbitron.className} text-xl mb-2`}>
-                The Challenge
-              </h3>
-              <p className="text-muted-foreground">
-                {project.problem}
-              </p>
+              <h3 className={`${orbitron.className} text-xl mb-2`}>The Challenge</h3>
+              <p className="text-muted-foreground">{project.problem}</p>
             </div>
           )}
 
           {project.solution && (
             <div>
-              <h3 className={`${orbitron.className} text-xl mb-2`}>
-                The Solution
-              </h3>
-              <p className="text-muted-foreground">
-                {project.solution}
-              </p>
+              <h3 className={`${orbitron.className} text-xl mb-2`}>The Solution</h3>
+              <p className="text-muted-foreground">{project.solution}</p>
             </div>
           )}
         </div>
@@ -160,16 +160,10 @@ export default async function ProjectPage({ params }: PageProps) {
         {/* FEATURES */}
         {project.features?.length && (
           <div>
-            <h3 className={`${orbitron.className} text-xl mb-3`}>
-              Key Features
-            </h3>
-
+            <h3 className={`${orbitron.className} text-xl mb-3`}>Key Features</h3>
             <ul className="grid gap-3 md:grid-cols-2">
               {project.features.map((item, i) => (
-                <li
-                  key={i}
-                  className="p-3 border rounded-lg bg-muted"
-                >
+                <li key={i} className="p-3 border rounded-lg bg-muted">
                   ✅ {item}
                 </li>
               ))}
@@ -180,29 +174,18 @@ export default async function ProjectPage({ params }: PageProps) {
         {/* RESULTS */}
         {project.results && (
           <div>
-            <h3 className={`${orbitron.className} text-xl mb-3`}>
-              Results
-            </h3>
-
-            <p className="text-muted-foreground">
-              {project.results}
-            </p>
+            <h3 className={`${orbitron.className} text-xl mb-3`}>Results</h3>
+            <p className="text-muted-foreground">{project.results}</p>
           </div>
         )}
 
         {/* GALLERY */}
         {project.gallery?.length && (
           <div>
-            <h3 className={`${orbitron.className} text-xl mb-4`}>
-              Project Gallery
-            </h3>
-
+            <h3 className={`${orbitron.className} text-xl mb-4`}>Project Gallery</h3>
             <div className="grid gap-4 md:grid-cols-2">
               {project.gallery.map((img, i) => (
-                <div
-                  key={i}
-                  className="relative aspect-video rounded-lg overflow-hidden border"
-                >
+                <div key={i} className="relative aspect-video rounded-lg overflow-hidden border">
                   <Image
                     src={urlFor(img).width(800).url()}
                     alt={`Gallery ${i + 1}`}
@@ -215,13 +198,13 @@ export default async function ProjectPage({ params }: PageProps) {
           </div>
         )}
 
-        {/* CTA */}
+        {/* CTA BUTTONS */}
         <div className="flex flex-wrap justify-center gap-4 pt-6">
           {project.liveUrl && (
             <Link
               href={project.liveUrl}
               target="_blank"
-              className={`${orbitron.className} px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition`}
+              className={`${orbitron.className} px-6 py-3 rounded-lg border transition hover:bg-[#C41E3A]`}
             >
               Visit Website
             </Link>
@@ -242,12 +225,11 @@ export default async function ProjectPage({ params }: PageProps) {
         <div className="pt-20 text-center">
           <Link
             href="/#projects"
-            className="text-sm text-muted-foreground hover:text-primary transition"
+            className={`${orbitron.className} px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:text-white hover:bg-[#C41E3A] transition font-bold `}
           >
             ← Back to Projects
           </Link>
         </div>
-
       </div>
     </section>
   );
