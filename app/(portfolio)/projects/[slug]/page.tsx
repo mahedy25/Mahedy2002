@@ -5,6 +5,7 @@ import { Orbitron } from "next/font/google";
 import { sanityFetch } from "../../../../sanity/lib/live";
 import { urlFor } from "../../../../sanity/lib/image";
 import { PortableText } from "@portabletext/react";
+import VideoPlayer from "../../../../components/VideoPlayer";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -24,7 +25,7 @@ interface Project {
   technologies?: Technology[] | null;
   liveUrl?: string | null;
   githubUrl?: string | null;
-
+slug?: { current: string } | null;
   overview?: any[];
   problem?: string | null;
   solution?: string | null;
@@ -93,28 +94,25 @@ export default async function ProjectPage({ params }: PageProps) {
         </div>
 
         {/* COVER OR VIDEO */}
-        <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-xl">
-          {project.demoVideo?.asset?.url ? (
-            <video
-              src={project.demoVideo.asset.url}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            project.coverImage && (
-              <Image
-                src={urlFor(project.coverImage).width(1200).url()}
-                alt={project.title ?? "Project screenshot"}
-                fill
-                className="object-cover"
-                priority
-              />
-            )
-          )}
-        </div>
+<div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-xl">
+  {project.demoVideo?.asset?.url ? (
+    <VideoPlayer
+      videoUrl={project.demoVideo.asset.url}
+      id={`video-${project.slug?.current}`}
+    />
+  ) : (
+    project.coverImage && (
+      <Image
+        src={urlFor(project.coverImage).width(1200).url()}
+        alt={project.title ?? "Project screenshot"}
+        fill
+        className="object-cover"
+        priority
+      />
+    )
+  )}
+</div>
+
 
         {/* TECH STACK */}
         {project.technologies?.length && (

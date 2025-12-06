@@ -46,7 +46,7 @@ const PROJECTS_QUERY = defineQuery(`
 `);
 
 export async function ProjectsSection() {
-  const result = await sanityFetch({ query: PROJECTS_QUERY }) as { data: Project[] };
+  const result = (await sanityFetch({ query: PROJECTS_QUERY })) as { data: Project[] };
   const projects = result.data;
 
   if (!projects || projects.length === 0) return null;
@@ -54,7 +54,6 @@ export async function ProjectsSection() {
   return (
     <section id="projects" className="cursor-pointer py-20 px-6 bg-muted/30">
       <div className="container mx-auto max-w-6xl">
-
         {/* SECTION HEADER */}
         <div className="text-center mb-16">
           <h2 className={`${orbitron.className} text-4xl md:text-5xl font-bold mb-4`}>
@@ -73,28 +72,26 @@ export async function ProjectsSection() {
         {/* PROJECT GRID */}
         <div className="@container">
           <div className="grid grid-cols-1 @2xl:grid-cols-2 @5xl:grid-cols-3 gap-8">
-
             {projects.map((project) => {
               if (!project.slug?.current) return null;
 
               return (
                 <div
                   key={project.slug.current}
-                  className="@container/card group relative bg-card border rounded-lg overflow-hidden
+                  className="group relative bg-card border rounded-lg overflow-hidden
                              transition-all duration-300
                              hover:shadow-[0_0_30px_rgba(196,30,58,0.6)]
                              hover:border-[#C41E3A]"
                 >
-
-                  {/* CARD LINK OVERLAY (case study navigation) */}
+                  {/* CARD LINK OVERLAY */}
                   <Link
                     href={`/projects/${project.slug.current}`}
-                    className="absolute inset-0 z-1"
+                    className="absolute inset-0 z-50"
                     aria-label={`Open case study for ${project.title}`}
                   />
 
                   {/* MEDIA */}
-                  <div className="relative z-2 aspect-video overflow-hidden bg-muted rounded-t-lg">
+                  <div className="relative z-10 aspect-video overflow-hidden bg-muted rounded-t-lg pointer-events-none">
                     {project.demoVideo?.asset?.url ? (
                       <video
                         src={project.demoVideo.asset.url}
@@ -117,8 +114,7 @@ export async function ProjectsSection() {
                   </div>
 
                   {/* CONTENT */}
-                  <div className="relative z-2 p-4 @md/card:p-6 space-y-3 @md/card:space-y-4">
-
+                  <div className="relative z-10 p-4 @md/card:p-6 space-y-3 @md/card:space-y-4 pointer-events-none">
                     <div>
                       {project.category && (
                         <span className="text-xs px-2 py-0.5 @md/card:py-1 rounded-full bg-primary/10 text-primary">
@@ -146,7 +142,6 @@ export async function ProjectsSection() {
                             {tech.name}
                           </span>
                         ))}
-
                         {project.technologies.length > 4 && (
                           <span className="text-xs px-2 py-0.5 rounded-md bg-muted">
                             +{project.technologies.length - 4}
@@ -155,21 +150,18 @@ export async function ProjectsSection() {
                       </div>
                     )}
 
-                    {/* CTA BUTTONS */}
+{/* CTA BUTTONS */}
                     {(project.liveUrl || project.githubUrl) && (
-                      <div className="flex gap-3 pt-3">
-
+                      <div className="flex gap-3 pt-3 relative z-20 pointer-events-auto">
                         {project.liveUrl && (
                           <Link
                             href={project.liveUrl}
                             target="_blank"
-                            className={`${orbitron.className}
-                              z-3 text-xs px-3 py-1.5 rounded-md border bg-card
+                            className={`${orbitron.className} text-xs px-3 py-1.5 rounded-md border bg-card
                               transition-all
                               hover:border-[#C41E3A]
                               hover:text-[#C41E3A]
-                              hover:shadow-[0_0_18px_rgba(196,30,58,0.6)]
-                            `}
+                              hover:shadow-[0_0_18px_rgba(196,30,58,0.6)]`}
                           >
                             Live ↗
                           </Link>
@@ -179,30 +171,25 @@ export async function ProjectsSection() {
                           <Link
                             href={project.githubUrl}
                             target="_blank"
-                            className={`${orbitron.className}
-                              z-3 text-xs px-3 py-1.5 rounded-md border bg-card
+                            className={`${orbitron.className} text-xs px-3 py-1.5 rounded-md border bg-card
                               transition-all
                               hover:border-[#C41E3A]
                               hover:text-[#C41E3A]
-                              hover:shadow-[0_0_18px_rgba(196,30,58,0.6)]
-                            `}
+                              hover:shadow-[0_0_18px_rgba(196,30,58,0.6)]`}
                           >
                             GitHub ↗
                           </Link>
                         )}
-
                       </div>
                     )}
 
                   </div>
-
                 </div>
               );
             })}
-
+             
           </div>
         </div>
-
       </div>
     </section>
   );
