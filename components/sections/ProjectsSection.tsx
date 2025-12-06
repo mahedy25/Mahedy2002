@@ -5,6 +5,7 @@ import { sanityFetch } from "../../sanity/lib/live";
 import { urlFor } from "../../sanity/lib/image";
 import { Orbitron } from "next/font/google";
 import { EncryptedText } from "../ui/encrypted-text";
+import ProjectCardMedia from "../ProjectCardMedia";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -83,38 +84,16 @@ export async function ProjectsSection() {
                              hover:shadow-[0_0_30px_rgba(196,30,58,0.6)]
                              hover:border-[#C41E3A]"
                 >
-                  {/* CARD LINK OVERLAY */}
-                  <Link
-                    href={`/projects/${project.slug.current}`}
-                    className="absolute inset-0 z-50"
-                    aria-label={`Open case study for ${project.title}`}
-                  />
-
-                  {/* MEDIA */}
-                  <div className="relative z-10 aspect-video overflow-hidden bg-muted rounded-t-lg pointer-events-none">
-                    {project.demoVideo?.asset?.url ? (
-                      <video
-                        src={project.demoVideo.asset.url}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        className="w-full h-full object-cover rounded-t-lg"
-                      />
-                    ) : (
-                      project.coverImage && (
-                        <Image
-                          src={urlFor(project.coverImage).width(600).height(400).url()}
-                          alt={project.title ?? "Project image"}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-t-lg"
-                        />
-                      )
-                    )}
-                  </div>
+                  {/* MEDIA LINK */}
+                  <ProjectCardMedia
+  slug={project.slug.current}
+  title={project.title}
+  demoVideo={project.demoVideo}
+  coverImage={project.coverImage}
+/>
 
                   {/* CONTENT */}
-                  <div className="relative z-10 p-4 @md/card:p-6 space-y-3 @md/card:space-y-4 pointer-events-none">
+                  <div className="relative z-10 p-4 @md/card:p-6 space-y-3 @md/card:space-y-4">
                     <div>
                       {project.category && (
                         <span className="text-xs px-2 py-0.5 @md/card:py-1 rounded-full bg-primary/10 text-primary">
@@ -150,9 +129,9 @@ export async function ProjectsSection() {
                       </div>
                     )}
 
-{/* CTA BUTTONS */}
+                    {/* CTA BUTTONS */}
                     {(project.liveUrl || project.githubUrl) && (
-                      <div className="flex gap-3 pt-3 relative z-20 pointer-events-auto">
+                      <div className="flex gap-3 pt-3 relative z-20">
                         {project.liveUrl && (
                           <Link
                             href={project.liveUrl}
@@ -182,12 +161,10 @@ export async function ProjectsSection() {
                         )}
                       </div>
                     )}
-
                   </div>
                 </div>
               );
             })}
-             
           </div>
         </div>
       </div>
