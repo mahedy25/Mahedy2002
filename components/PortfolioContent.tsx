@@ -1,5 +1,6 @@
 import { AboutSection } from './sections/AboutSection'
 import { AchievementsSection } from './sections/AchievementsSection'
+
 import { BlogSection } from './sections/BlogSection'
 import { CertificationsSection } from './sections/CertificationSection'
 import { ContactSection } from './sections/ContactSection'
@@ -10,6 +11,8 @@ import { ProjectsSection } from './sections/ProjectsSection'
 import { ServicesSection } from './sections/ServicesSection'
 import { SkillsSection } from './sections/SkillsSection'
 import { TestimonialsSection } from './sections/TestimonialsSection'
+
+import skill from '../sanity/schemaTypes/skill'
 
 async function PortfolioContent() {
   return (

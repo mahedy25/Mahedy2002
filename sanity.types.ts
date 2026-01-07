@@ -432,6 +432,18 @@ export type Skill = {
   _updatedAt: string;
   _rev: string;
   name?: string;
+  icon?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   category?: "core-web" | "frontend" | "animations" | "backend" | "database" | "cms-auth" | "payments" | "devops-hosting" | "version-control" | "tools" | "design-ui/ux" | "web-services" | "soft-skills";
   proficiency?: "beginner" | "intermediate" | "advanced" | "expert";
   percentage?: number;
@@ -859,6 +871,21 @@ export type ACHIEVEMENTS_QUERYResult = Array<{
   order: number | null;
 }>;
 
+// Source: ./components/sections/BestSkills.tsx
+// Variable: SKILLS_QUERY
+// Query: *[_type == "skill"] | order(category asc, name asc){    _id,    name,    category,    color,    icon{      asset->{        url      }    }  }
+export type SKILLS_QUERYResult = Array<{
+  _id: string;
+  name: string | null;
+  category: "animations" | "backend" | "cms-auth" | "core-web" | "database" | "design-ui/ux" | "devops-hosting" | "frontend" | "payments" | "soft-skills" | "tools" | "version-control" | "web-services" | null;
+  color: string | null;
+  icon: {
+    asset: {
+      url: string | null;
+    } | null;
+  } | null;
+}>;
+
 // Source: ./components/sections/BlogSection.tsx
 // Variable: BLOG_QUERY
 // Query: *[_type == "blog"] | order(publishedAt desc){  title,  slug,  excerpt,  category,  tags,  publishedAt,  readTime,  featuredImage}
@@ -1249,18 +1276,6 @@ export type SERVICES_QUERYResult = Array<{
   order: number | null;
 }>;
 
-// Source: ./components/sections/SkillsSection.tsx
-// Variable: SKILLS_QUERY
-// Query: *[_type == "skill"] | order(category asc, order asc){  name,  category,  proficiency,  percentage,  yearsOfExperience,  color}
-export type SKILLS_QUERYResult = Array<{
-  name: string | null;
-  category: "animations" | "backend" | "cms-auth" | "core-web" | "database" | "design-ui/ux" | "devops-hosting" | "frontend" | "payments" | "soft-skills" | "tools" | "version-control" | "web-services" | null;
-  proficiency: "advanced" | "beginner" | "expert" | "intermediate" | null;
-  percentage: number | null;
-  yearsOfExperience: number | null;
-  color: string | null;
-}>;
-
 // Source: ./components/sections/TestimonialsSection.tsx
 // Variable: TESTIMONIALS_QUERY
 // Query: *[_type == "testimonial" && featured == true] | order(order asc){  name,  position,  company,  testimonial,  rating,  date,  avatar,  companyLogo,  linkedinUrl}
@@ -1307,6 +1322,7 @@ declare module "@sanity/client" {
     "*[_type == \"navigation\"] | order(order asc){\n  title,\n  href,\n  icon,\n  isExternal\n}": NAVIGATION_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n  firstName,\n  lastName,\n  fullBio,\n  yearsOfExperience,\n  stats,\n  email,\n  phone,\n  location\n}": ABOUT_QUERYResult;
     "*[_type == \"achievement\"] | order(date desc){\n  title,\n  type,\n  issuer,\n  date,\n  description,\n  image,\n  url,\n  featured,\n  order\n}": ACHIEVEMENTS_QUERYResult;
+    "\n  *[_type == \"skill\"] | order(category asc, name asc){\n    _id,\n    name,\n    category,\n    color,\n    icon{\n      asset->{\n        url\n      }\n    }\n  }\n": SKILLS_QUERYResult;
     "*[_type == \"blog\"] | order(publishedAt desc){\n  title,\n  slug,\n  excerpt,\n  category,\n  tags,\n  publishedAt,\n  readTime,\n  featuredImage\n}": BLOG_QUERYResult;
     "*[_type == \"certification\"] | order(issueDate desc){\n  name,\n  issuer,\n  issueDate,\n  expiryDate,\n  credentialId,\n  credentialUrl,\n  logo,\n  description,\n  skills[]->{name, category},\n  order\n}": CERTIFICATIONS_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n  email,\n  phone,\n  location,\n  socialLinks\n}": PROFILE_QUERYResult;
@@ -1316,7 +1332,6 @@ declare module "@sanity/client" {
     "*[_id == \"singleton-profile\"][0]{\n  firstName,\n  lastName,\n  headline,\n  headlineStaticText,\n  headlineAnimatedWords,\n  headlineAnimationDuration,\n  shortBio,\n  email,\n  phone,\n  location,\n  availability,\n  socialLinks,\n  yearsOfExperience,\n  profileImage\n}": HERO_QUERYResult;
     "\n  *[_type == \"project\" && featured == true] | order(order asc)[0...6]{\n    title,\n    slug,\n    tagline,\n    category,\n    liveUrl,\n    githubUrl,\n    coverImage,\n    demoVideo{asset->{url}},\n    technologies[]->{name, color}\n  }\n": PROJECTS_QUERYResult;
     "*[_type == \"service\"] | order(order asc, _createdAt desc){\n  title,\n  slug,\n  icon,\n  shortDescription,\n  fullDescription,\n  features,\n  technologies[]->{name, category},\n  deliverables,\n  pricing,\n  timeline,\n  featured,\n  order\n}": SERVICES_QUERYResult;
-    "*[_type == \"skill\"] | order(category asc, order asc){\n  name,\n  category,\n  proficiency,\n  percentage,\n  yearsOfExperience,\n  color\n}": SKILLS_QUERYResult;
     "*[_type == \"testimonial\" && featured == true] | order(order asc){\n  name,\n  position,\n  company,\n  testimonial,\n  rating,\n  date,\n  avatar,\n  companyLogo,\n  linkedinUrl\n}": TESTIMONIALS_QUERYResult;
   }
 }
