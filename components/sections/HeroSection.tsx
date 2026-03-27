@@ -8,7 +8,7 @@ import { LayoutTextFlip } from '../ui/layout-text-flip'
 import { urlFor } from '../../sanity/lib/image'
 import { EncryptedText } from '../ui/encrypted-text'
 import { Orbitron } from 'next/font/google'
-import { Github, Instagram, Linkedin, Twitter } from 'lucide-react'
+import { Facebook, Github, Instagram, Linkedin, Twitter } from 'lucide-react'
 const orbitron = Orbitron({
   subsets: ['latin'],
   weight: ['500', '700', '900'],
@@ -52,7 +52,7 @@ export async function HeroSection() {
             {/* Text Content */}
             <div className='  @container/hero space-y-4 @md/hero:space-y-6'>
               <h1
-  className={`${orbitron.className}
+                className={`${orbitron.className}
     relative text-[#C41E3A]
     flex flex-wrap items-center sm:items-start justify-center sm:justify-start gap-x-2
     font-bold tracking-tight leading-[1.05]
@@ -60,9 +60,9 @@ export async function HeroSection() {
     text-[clamp(1.6rem,6vw,2.4rem)]
     @md/hero:text-[clamp(2.3rem,6vw,3rem)]
   `}
->
-  {`${profile.firstName ?? ''} ${profile.lastName ?? ''}`}
-</h1>
+              >
+                {`${profile.firstName ?? ''} ${profile.lastName ?? ''}`}
+              </h1>
 
               {profile.headlineStaticText &&
               profile.headlineAnimatedWords &&
@@ -98,70 +98,68 @@ export async function HeroSection() {
               </p>
 
               {profile.socialLinks && (
-  <div className="flex flex-wrap gap-3 @md/hero:gap-4 pt-4">
-    
-    {profile.socialLinks.github && (
-      <Link
-        href={profile.socialLinks.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group relative flex items-center justify-center w-10 h-10 @md/hero:w-12 @md/hero:h-12 rounded-lg border hover:bg-accent transition-colors"
-      >
-        <Github className="w-5 h-5 @md/hero:w-6 @md/hero:h-6" />
+                <div className='flex flex-wrap gap-3 @md/hero:gap-4 pt-4'>
+                  {profile.socialLinks.github && (
+                    <Link
+                      href={profile.socialLinks.github}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='group relative flex items-center justify-center w-10 h-10 @md/hero:w-12 @md/hero:h-12 rounded-lg border hover:bg-accent transition-colors'
+                    >
+                      <Github className='w-5 h-5 @md/hero:w-6 @md/hero:h-6' />
 
-        <span className="absolute -bottom-8 opacity-0 group-hover:opacity-100 transition text-xs bg-muted px-2 py-1 rounded-md whitespace-nowrap">
-          GitHub
-        </span>
-      </Link>
-    )}
+                      <span className='absolute -bottom-8 opacity-0 group-hover:opacity-100 transition text-xs bg-muted px-2 py-1 rounded-md whitespace-nowrap'>
+                        GitHub
+                      </span>
+                    </Link>
+                  )}
 
-    {profile.socialLinks.linkedin && (
-      <Link
-        href={profile.socialLinks.linkedin}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group relative flex items-center justify-center w-10 h-10 @md/hero:w-12 @md/hero:h-12 rounded-lg border hover:bg-accent transition-colors"
-      >
-        <Linkedin className="w-5 h-5 @md/hero:w-6 @md/hero:h-6" />
+                  {profile.socialLinks.linkedin && (
+                    <Link
+                      href={profile.socialLinks.linkedin}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='group relative flex items-center justify-center w-10 h-10 @md/hero:w-12 @md/hero:h-12 rounded-lg border hover:bg-accent transition-colors'
+                    >
+                      <Linkedin className='w-5 h-5 @md/hero:w-6 @md/hero:h-6' />
 
-        <span className="absolute -bottom-8 opacity-0 group-hover:opacity-100 transition text-xs bg-muted px-2 py-1 rounded-md whitespace-nowrap">
-          LinkedIn
-        </span>
-      </Link>
-    )}
+                      <span className='absolute -bottom-8 opacity-0 group-hover:opacity-100 transition text-xs bg-muted px-2 py-1 rounded-md whitespace-nowrap'>
+                        LinkedIn
+                      </span>
+                    </Link>
+                  )}
 
-    {profile.socialLinks.twitter && (
-      <Link
-        href={profile.socialLinks.twitter}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group relative flex items-center justify-center w-10 h-10 @md/hero:w-12 @md/hero:h-12 rounded-lg border hover:bg-accent transition-colors"
-      >
-        <Twitter className="w-5 h-5 @md/hero:w-6 @md/hero:h-6" />
+                  {profile.socialLinks.facebook && (
+                    <Link
+                      href={profile.socialLinks.facebook}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='group relative flex items-center justify-center w-10 h-10 @md/hero:w-12 @md/hero:h-12 rounded-lg border hover:bg-accent transition-colors'
+                    >
+                      <Facebook className='w-5 h-5 @md/hero:w-6 @md/hero:h-6' />
 
-        <span className="absolute -bottom-8 opacity-0 group-hover:opacity-100 transition text-xs bg-muted px-2 py-1 rounded-md whitespace-nowrap">
-          Twitter
-        </span>
-      </Link>
-    )}
+                      <span className='absolute -bottom-8 opacity-0 group-hover:opacity-100 transition text-xs bg-muted px-2 py-1 rounded-md whitespace-nowrap'>
+                        Facebook
+                      </span>
+                    </Link>
+                  )}
 
-    {profile.socialLinks.instagram && (
-      <Link
-        href={profile.socialLinks.instagram}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group relative flex items-center justify-center w-10 h-10 @md/hero:w-12 @md/hero:h-12 rounded-lg border hover:bg-accent transition-colors"
-      >
-        <Instagram className="w-5 h-5 @md/hero:w-6 @md/hero:h-6" />
+                  {profile.socialLinks.instagram && (
+                    <Link
+                      href={profile.socialLinks.instagram}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='group relative flex items-center justify-center w-10 h-10 @md/hero:w-12 @md/hero:h-12 rounded-lg border hover:bg-accent transition-colors'
+                    >
+                      <Instagram className='w-5 h-5 @md/hero:w-6 @md/hero:h-6' />
 
-        <span className="absolute -bottom-8 opacity-0 group-hover:opacity-100 transition text-xs bg-muted px-2 py-1 rounded-md whitespace-nowrap">
-          Instagram
-        </span>
-      </Link>
-    )}
-
-  </div>
-)}
+                      <span className='absolute -bottom-8 opacity-0 group-hover:opacity-100 transition text-xs bg-muted px-2 py-1 rounded-md whitespace-nowrap'>
+                        Instagram
+                      </span>
+                    </Link>
+                  )}
+                </div>
+              )}
 
               <div className='flex flex-wrap gap-4 @md/hero:gap-6 pt-4 text-xs @md/hero:text-sm text-muted-foreground'>
                 {profile.email && (
