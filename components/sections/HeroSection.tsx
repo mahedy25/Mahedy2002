@@ -6,9 +6,9 @@ import { sanityFetch } from '../../sanity/lib/live'
 import { BackgroundRippleEffect } from '../ui/background-ripple-effect'
 import { LayoutTextFlip } from '../ui/layout-text-flip'
 import { urlFor } from '../../sanity/lib/image'
-import { EncryptedText } from '../ui/encrypted-text'
 import { Orbitron } from 'next/font/google'
 import { Facebook, Github, Instagram, Linkedin, Twitter } from 'lucide-react'
+import { TwitterIcon } from '@sanity/icons'
 const orbitron = Orbitron({
   subsets: ['latin'],
   weight: ['500', '700', '900'],
@@ -44,7 +44,7 @@ export async function HeroSection() {
       className='relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden'
     >
       {/* Background Ripple Effect */}
-      <BackgroundRippleEffect rows={8} cols={27} cellSize={56} />
+      <BackgroundRippleEffect rows={8} cols={50} cellSize={25} />
 
       <div className='relative z-10 container mx-auto max-w-6xl'>
         <div className='@container'>
@@ -140,6 +140,21 @@ export async function HeroSection() {
 
                       <span className='absolute -bottom-8 opacity-0 group-hover:opacity-100 transition text-xs bg-muted px-2 py-1 rounded-md whitespace-nowrap'>
                         Facebook
+                      </span>
+                    </Link>
+                  )}
+
+                  {profile.socialLinks.twitter && (
+                    <Link
+                      href={profile.socialLinks.twitter}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='group relative flex items-center justify-center w-10 h-10 @md/hero:w-12 @md/hero:h-12 rounded-lg border hover:bg-accent transition-colors'
+                    >
+                      <TwitterIcon className='w-5 h-5 @md/hero:w-6 @md/hero:h-6' />
+
+                      <span className='absolute -bottom-8 opacity-0 group-hover:opacity-100 transition text-xs bg-muted px-2 py-1 rounded-md whitespace-nowrap'>
+                        X/Twitter
                       </span>
                     </Link>
                   )}
