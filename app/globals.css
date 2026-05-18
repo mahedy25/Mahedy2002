@@ -176,5 +176,30 @@ body {
 }
 
 
+/* ── Zapier Chatbot Responsive Fix ── */
+.zapier-chat-wrapper {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 9999;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 32px);
+}
 
+/* Mobile */
+@media (max-width: 640px) {
+  .zapier-chat-wrapper {
+    bottom: 70px;   /* above floating dock */
+    right: 12px;
+    max-width: calc(100vw - 24px);
+  }
+}
 
+/* Remove white background from bubble */
+.zapier-chat-wrapper zapier-interfaces-chatbot-embed {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  display: block;
+  max-width: 100%;
+}
